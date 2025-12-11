@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flip - Game Projects</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Game Projects</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="coin-flip.html">Coin Flip</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-3">Coin Flip Game</h2>
+                <p>A simple demonstration with smooth, real-time statistics and 60fps plot updates.</p>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Controls</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-auto">
+                                <button id="flip-btn" class="btn btn-primary btn-lg">Flip Coin</button>
+                                <button id="reset-btn" class="btn btn-secondary btn-lg">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-auto">
+                                <button id="autoplay-btn" class="btn btn-success">Start Autoplay</button>
+                                <button id="stop-btn" class="btn btn-danger">Stop</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="speed-slider" class="form-label">
+                                    Speed: <span id="speed-value">5</span> flips/second
+                                </label>
+                                <input type="range" class="form-range" id="speed-slider"
+                                       min="1" max="60" value="5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Display and Stats -->
+        <div class="row mb-4">
+            <!-- Coin Display -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h3>Current Result</h3>
+                        <div id="coin-display" style="font-size: 120px;">🪙</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="stat-card">
+                                    <h6>Total Flips</h6>
+                                    <h3 id="total-flips">0</h3>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-card">
+                                    <h6>Heads</h6>
+                                    <h3 id="heads-count">0 (0.0%)</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="stat-card">
+                                    <h6>Tails</h6>
+                                    <h3 id="tails-count">0 (0.0%)</h3>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-card">
+                                    <h6>Current Streak</h6>
+                                    <h3 id="streak">0 (N/A)</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Graphs -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Heads Percentage Over Time</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="percentage-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Heads vs Tails Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="distribution-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/coin-flip.js"></script>
+</body>
+</html>
