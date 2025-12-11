@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Game - Game Projects</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .board-cell {
+            aspect-ratio: 1;
+            border: 2px solid #30363d;
+            background-color: #1c2128;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: background-color 0.2s;
+        }
+        .board-cell:hover:not(.filled) {
+            background-color: #21262d;
+        }
+        .board-cell.filled {
+            cursor: not-allowed;
+        }
+        .board-container {
+            display: inline-block;
+            background-color: #0d1117;
+            padding: 10px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .player-config {
+            border: 1px solid #30363d;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            background-color: #1c2128;
+        }
+        .player-indicator {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #30363d;
+        }
+        .winning-cell {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .gravity-indicator {
+            position: absolute;
+            font-size: 2rem;
+            color: #58a6ff;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .gravity-indicator-top {
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .gravity-indicator-bottom {
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .gravity-indicator-left {
+            left: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .gravity-indicator-right {
+            right: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Game Projects</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="coin-flip.html">Coin Flip</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shut-the-box.html">Shut the Box</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="connect-game.html">Connect Game</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-3">Connect Game</h2>
+                <p>Configurable Tic-Tac-Toe/Connect Four hybrid with teams, multiple players, and AI strategies.</p>
+            </div>
+        </div>
+
+        <!-- Game Rules -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>
+                            <a class="text-decoration-none" data-bs-toggle="collapse" href="#rulesCollapse" role="button" aria-expanded="false" aria-controls="rulesCollapse">
+                                How to Play
+                                <span class="float-end">▼</span>
+                            </a>
+                        </h5>
+                    </div>
+                    <div class="collapse" id="rulesCollapse">
+                        <div class="card-body">
+                            <h6>Objective</h6>
+                            <p>
+                                Connect the required number of pieces in a row (horizontally, vertically, or diagonally) to win.
+                                This game combines Tic-Tac-Toe and Connect Four with unlimited customization options.
+                            </p>
+
+                            <h6>Basic Rules</h6>
+                            <ol>
+                                <li><strong>Configure the game</strong> - Set board size, win length, and player options</li>
+                                <li><strong>Take turns</strong> - Click on the board to place your piece (players identified by hex numbers: 0, 1, 2, ..., 9, A, B, C, etc.)</li>
+                                <li><strong>Gravity mode</strong> - When enabled, pieces fall to the bottom (Connect Four style). When disabled, place anywhere (Tic-Tac-Toe style)</li>
+                                <li><strong>Win condition</strong> - Connect the required number of pieces in a row to win</li>
+                                <li><strong>Team play</strong> - Players on the same team share a color and win together</li>
+                            </ol>
+
+                            <h6>Configuration Options</h6>
+                            <ul>
+                                <li><strong>Board Size</strong> - Width (3-12) and Height (3-12) customizable</li>
+                                <li><strong>Win Length</strong> - Number of pieces to connect (3-8)</li>
+                                <li><strong>Gravity</strong> - Toggle between Tic-Tac-Toe mode (off) and Connect Four mode (on)</li>
+                                <li><strong>Players</strong> - Add unlimited players, assign to teams, or play solo vs AI</li>
+                                <li><strong>Teams</strong> - Group players into teams (up to 6 teams). Teammates share colors and win together</li>
+                                <li><strong>AI Opponents</strong> - Choose from multiple AI strategies:
+                                    <ul>
+                                        <li><strong>Random</strong> - Picks completely random valid moves. No strategy, purely chance-based gameplay.</li>
+                                        <li><strong>Defensive</strong> - Analyzes all positions and blocks the longest opponent chain by placing adjacent to it. Pure defensive play, never considers offense.</li>
+                                        <li><strong>Offensive</strong> - Extends its own longest chain whenever possible. If a chain can't be extended toward victory, creates new chains. Pure offensive play, never blocks.</li>
+                                        <li><strong>Defensive Smart</strong> - Primarily defensive, blocks longest opponent chains. Will break from defense only to take immediate winning moves.</li>
+                                        <li><strong>Offensive Smart</strong> - Primarily offensive, extends longest chains. Will break from offense only to block immediate opponent wins or take wins.</li>
+                                        <li><strong>Smart (Balanced)</strong> - Fully balanced strategy: (1) Takes immediate wins, (2) Blocks opponent wins, (3) Uses positioning heuristics (center preference, piece clustering). Most challenging opponent.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h6>Examples</h6>
+                            <ul>
+                                <li><strong>Classic Tic-Tac-Toe</strong>: 3×3 board, connect 3, gravity off, 2 players</li>
+                                <li><strong>Classic Connect Four</strong>: 7×6 board, connect 4, gravity on, 2 players</li>
+                                <li><strong>Team Battle</strong>: 10×10 board, connect 5, 4 players in 2 teams (Team 1: Players 0 & 1, Team 2: Players 2 & 3)</li>
+                                <li><strong>Free-for-all</strong>: 8×8 board, connect 4, gravity off, 4 individual players</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Configuration Panel -->
+            <div class="col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Game Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Board Settings -->
+                        <h6 class="mb-3">Board Settings</h6>
+                        <div class="mb-3">
+                            <label for="board-width" class="form-label">Width: <span id="width-value">7</span></label>
+                            <input type="range" class="form-range" id="board-width" min="3" max="12" value="7">
+                        </div>
+                        <div class="mb-3">
+                            <label for="board-height" class="form-label">Height: <span id="height-value">6</span></label>
+                            <input type="range" class="form-range" id="board-height" min="3" max="12" value="6">
+                        </div>
+                        <div class="mb-3">
+                            <label for="win-length" class="form-label">Connect: <span id="win-value">4</span></label>
+                            <input type="range" class="form-range" id="win-length" min="3" max="8" value="4">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="gravity-toggle">
+                            <label class="form-check-label" for="gravity-toggle">
+                                Enable Gravity (Connect Four mode)
+                            </label>
+                        </div>
+
+                        <div class="mb-3" id="gravity-rotation-section" style="display: none;">
+                            <label class="form-label">Rotate Gravity Every N Turns:</label>
+                            <input type="number" class="form-control form-control-sm mb-2" id="gravity-rotation-turns" min="1" max="50" value="5" placeholder="Number of turns">
+                            <select class="form-select form-select-sm" id="gravity-rotation-mode">
+                                <option value="none">No Rotation</option>
+                                <option value="clockwise">Clockwise (Down → Right → Up → Left)</option>
+                                <option value="counterclockwise">Counter-Clockwise (Down → Left → Up → Right)</option>
+                                <option value="random">Random Direction</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="team-collaboration-toggle" checked>
+                            <label class="form-check-label" for="team-collaboration-toggle">
+                                Teams can win with each other's pieces
+                            </label>
+                            <small class="form-text d-block">When enabled, teammates' pieces count toward win conditions. When disabled, only your own pieces count.</small>
+                        </div>
+
+                        <hr>
+
+                        <!-- Players Configuration -->
+                        <h6 class="mb-3">Players</h6>
+                        <div id="players-container"></div>
+                        <button id="add-player-btn" class="btn btn-sm btn-success mb-3">Add Player</button>
+                        <button id="remove-player-btn" class="btn btn-sm btn-danger mb-3" title="">Remove Player</button>
+
+                        <hr>
+
+                        <!-- Control Buttons -->
+                        <button id="start-game-btn" class="btn btn-primary w-100 mb-2">Start New Game</button>
+                        <button id="reset-btn" class="btn btn-secondary w-100">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Game Status -->
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5>Game Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <strong>Current Turn:</strong>
+                            <div id="current-player" class="mt-2">
+                                <span class="player-indicator" style="background-color: #58a6ff;"></span>
+                                <span class="ms-2">Player 1</span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <strong>Game State:</strong>
+                            <div id="game-state" class="mt-2">Not Started</div>
+                        </div>
+                        <div class="mt-3" id="gravity-direction-display" style="display: none;">
+                            <strong>Gravity Direction:</strong>
+                            <div id="gravity-direction" class="mt-2">↓ Down</div>
+                        </div>
+                        <div class="mt-3" id="ai-thinking" style="display: none;">
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span class="ms-2">AI thinking...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Board -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Game Board</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="board-container">
+                            <div id="game-board"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/connect-game.js"></script>
+</body>
+</html>
