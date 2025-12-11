@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shut the Box - Game Projects</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Game Projects</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="coin-flip.html">Coin Flip</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="shut-the-box.html">Shut the Box</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-3">Shut the Box</h2>
+                <p>Classic dice game with configurable rules and multiple autoplay strategies.</p>
+            </div>
+        </div>
+
+        <!-- Game Rules -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>
+                            <a class="text-decoration-none" data-bs-toggle="collapse" href="#rulesCollapse" role="button" aria-expanded="false" aria-controls="rulesCollapse">
+                                How to Play
+                                <span class="float-end">▼</span>
+                            </a>
+                        </h5>
+                    </div>
+                    <div class="collapse" id="rulesCollapse">
+                        <div class="card-body">
+                            <h6>Objective</h6>
+                            <p>
+                                The goal is to "shut" (close) all the numbered boxes by the end of the game.
+                                Your score is the sum of any boxes left open - lower is better, with 0 being a perfect win!
+                            </p>
+
+                            <h6>How to Play</h6>
+                            <ol>
+                                <li><strong>Roll the dice</strong> - Start with all boxes open (numbered 1-9 in classic mode)</li>
+                                <li><strong>Choose boxes</strong> - Select any combination of open boxes that add up to your dice total
+                                    <ul>
+                                        <li>Example: Roll a 7, you could shut box 7, or boxes 3+4, or 1+2+4, etc.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Shut the boxes</strong> - The chosen boxes are closed and can't be used again</li>
+                                <li><strong>Repeat</strong> - Keep rolling and shutting boxes until you either:
+                                    <ul>
+                                        <li>Close all boxes (you win with a score of 0!)</li>
+                                        <li>Can't make a valid combination (game over - your score is the sum of remaining boxes)</li>
+                                    </ul>
+                                </li>
+                            </ol>
+
+                            <h6>Strategy Matters</h6>
+                            <p>
+                                Different approaches for choosing which boxes to shut can dramatically affect your success rate.
+                                Use the autoplay strategies to experiment and see which performs best for different game configurations!
+                            </p>
+
+                            <h6>Autoplay Strategies</h6>
+                            <p>Use autoplay mode to test different strategies and see which performs best:</p>
+                            <ul>
+                                <li><strong>Minimize Maximum Box</strong>: Prioritizes closing the highest-numbered boxes first (generally best strategy)</li>
+                                <li><strong>Minimize Remaining Sum</strong>: Always picks the move that leaves the smallest total remaining</li>
+                                <li><strong>Balanced Split</strong>: Prefers combinations with balanced/average values</li>
+                                <li><strong>Greedy High/Low</strong>: Aggressively targets high or low numbers</li>
+                                <li><strong>Random</strong>: Randomly selects from valid moves (baseline for comparison)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Settings -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Game Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="num-dice" class="form-label">Number of Dice</label>
+                                <input type="number" id="num-dice" class="form-control"
+                                       value="2" min="1" max="10">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="die-faces" class="form-label">Die Faces</label>
+                                <input type="number" id="die-faces" class="form-control"
+                                       value="6" min="2" max="20">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="num-boxes" class="form-label">Number of Boxes</label>
+                                <input type="number" id="num-boxes" class="form-control"
+                                       value="9" min="3" max="200">
+                                <small class="form-text text-muted">Max roll: <span id="max-roll">12</span></small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="strategy" class="form-label">Autoplay Strategy</label>
+                                <select id="strategy" class="form-select">
+                                    <option value="random">Random - Pick any valid move</option>
+                                    <option value="minimize-max" selected>Minimize Max Box - Shut highest boxes first</option>
+                                    <option value="minimize-sum">Minimize Sum - Leave smallest total remaining</option>
+                                    <option value="balanced">Balanced - Prefer average-valued combinations</option>
+                                    <option value="greedy-high">Greedy High - Aggressively shut high numbers</option>
+                                    <option value="greedy-low">Greedy Low - Aggressively shut low numbers</option>
+                                </select>
+                                <small class="form-text text-muted" id="strategy-description">
+                                    Tries to shut the highest numbered boxes first to reduce maximum remaining box.
+                                </small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="autoplay-speed" class="form-label">
+                                    Autoplay Speed: <span id="speed-value">5</span> games/second
+                                </label>
+                                <input type="range" class="form-range" id="autoplay-speed"
+                                       min="1" max="60" value="5">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <button id="apply-settings-btn" class="btn btn-warning">Apply Settings & New Game</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Controls</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-auto">
+                                <button id="roll-btn" class="btn btn-primary btn-lg">Roll Dice</button>
+                                <button id="new-game-btn" class="btn btn-secondary btn-lg">New Game</button>
+                                <button id="reset-stats-btn" class="btn btn-danger btn-lg">Reset Stats</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <button id="autoplay-btn" class="btn btn-success">Start Autoplay</button>
+                                <button id="stop-btn" class="btn btn-danger">Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Board and Current Game Stats -->
+        <div class="row mb-4">
+            <!-- Game Board -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Game Board</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h5>Dice Roll: <span id="dice-display">-</span></h5>
+                        </div>
+                        <div id="boxes-container" class="d-flex flex-wrap gap-2 mb-3"></div>
+                        <div id="game-status" class="alert alert-info">
+                            Click "Roll Dice" to start a new game
+                        </div>
+                        <div id="move-selection" style="display: none;">
+                            <h6>Select boxes to shut (sum must equal <span id="target-sum">0</span>):</h6>
+                            <div id="combinations-container" class="d-flex flex-wrap gap-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Game Stats -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Current Game</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <div class="stat-card">
+                                    <h6>Rolls Made</h6>
+                                    <h3 id="current-rolls">0</h3>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-card">
+                                    <h6>Boxes Shut</h6>
+                                    <h3 id="boxes-shut">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="stat-card">
+                                    <h6>Current Score</h6>
+                                    <h3 id="current-score">0</h3>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-card">
+                                    <h6>Remaining Sum</h6>
+                                    <h3 id="remaining-sum">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overall Statistics -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Overall Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <h6>Games Played</h6>
+                                    <h3 id="total-games">0</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <h6>Wins (Score 0)</h6>
+                                    <h3 id="total-wins">0 (0.0%)</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <h6>Average Score</h6>
+                                    <h3 id="avg-score">-</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <h6>Best Score</h6>
+                                    <h3 id="best-score">-</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Graphs -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Score Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="score-distribution-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Average Score Over Time</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="avg-score-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/shut-the-box.js"></script>
+</body>
+</html>

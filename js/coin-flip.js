@@ -81,8 +81,8 @@ const percentageChart = new Chart(percentageCtx, {
         datasets: [{
             label: 'Heads %',
             data: [],
-            borderColor: '#1f77b4',
-            backgroundColor: 'rgba(31, 119, 180, 0.1)',
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88, 166, 255, 0.1)',
             borderWidth: 2,
             tension: 0.1,
             pointRadius: 0
@@ -98,29 +98,49 @@ const percentageChart = new Chart(percentageCtx, {
                 max: 100,
                 title: {
                     display: true,
-                    text: 'Heads Percentage'
+                    text: 'Heads Percentage',
+                    color: '#8b949e'
+                },
+                ticks: {
+                    color: '#8b949e'
+                },
+                grid: {
+                    color: '#30363d'
                 }
             },
             x: {
                 title: {
                     display: true,
-                    text: 'Flip Number'
+                    text: 'Flip Number',
+                    color: '#8b949e'
+                },
+                ticks: {
+                    color: '#8b949e'
+                },
+                grid: {
+                    color: '#30363d'
                 }
             }
         },
         plugins: {
+            legend: {
+                labels: {
+                    color: '#c9d1d9'
+                }
+            },
             annotation: {
                 annotations: {
                     line1: {
                         type: 'line',
                         yMin: 50,
                         yMax: 50,
-                        borderColor: 'red',
+                        borderColor: '#f85149',
                         borderWidth: 2,
                         borderDash: [5, 5],
                         label: {
                             content: 'Expected (50%)',
-                            enabled: true
+                            enabled: true,
+                            color: '#c9d1d9'
                         }
                     }
                 }
@@ -136,7 +156,7 @@ const distributionChart = new Chart(distributionCtx, {
         datasets: [{
             label: 'Count',
             data: [0, 0],
-            backgroundColor: ['#FFD700', '#C0C0C0']
+            backgroundColor: ['#f0c03d', '#8b949e']
         }]
     },
     options: {
@@ -148,7 +168,29 @@ const distributionChart = new Chart(distributionCtx, {
                 beginAtZero: true,
                 title: {
                     display: true,
-                    text: 'Count'
+                    text: 'Count',
+                    color: '#8b949e'
+                },
+                ticks: {
+                    color: '#8b949e'
+                },
+                grid: {
+                    color: '#30363d'
+                }
+            },
+            x: {
+                ticks: {
+                    color: '#8b949e'
+                },
+                grid: {
+                    color: '#30363d'
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#c9d1d9'
                 }
             }
         }

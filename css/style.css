@@ -2,35 +2,45 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #0d1117;
+    color: #c9d1d9;
 }
 
 .card {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #161b22;
+    border-color: #30363d;
+    color: #c9d1d9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s;
 }
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+    background-color: #1c2128;
+    border-bottom-color: #30363d;
+    color: #c9d1d9;
 }
 
 .stat-card {
     text-align: center;
     padding: 1rem;
-    background-color: #f8f9fa;
+    background-color: #1c2128;
     border-radius: 8px;
     margin-bottom: 0.5rem;
 }
 
 .stat-card h6 {
-    color: #6c757d;
+    color: #8b949e;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
 }
 
 .stat-card h3 {
-    color: #212529;
+    color: #c9d1d9;
     margin: 0;
     font-size: 1.5rem;
 }
@@ -43,6 +53,19 @@ body {
     font-size: 0.85rem;
 }
 
+/* Dark mode overrides for Bootstrap components */
+hr {
+    border-color: #30363d;
+    opacity: 1;
+}
+
+code {
+    background-color: #1c2128;
+    color: #f85149;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .stat-card h3 {
@@ -53,4 +76,13 @@ body {
 /* Chart containers */
 canvas {
     max-height: 300px;
+}
+
+/* Form text styling for dark theme */
+.form-text {
+    color: #8b949e !important;
+}
+
+.text-muted {
+    color: #8b949e !important;
 }
